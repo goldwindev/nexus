@@ -26,6 +26,9 @@ type RealmConfig struct {
 	AllowDisclose bool `json:"allow_disclose"`
 	// Slice of Authenticator interfaces.
 	Authenticators []auth.Authenticator
+	// If true, only attempt first authmethod. Otherwise attempt all authmethods
+	// specified in the Hello message
+	ExitOnBadAuth bool
 	// Authorizer called for each message.
 	Authorizer Authorizer
 	// Require authentication for local clients.  Normally local clients are
@@ -90,6 +93,7 @@ type realm struct {
 
 	// authmethod -> Authenticator
 	authenticators map[string]auth.Authenticator
+	exitOnBadAuth  bool
 
 	// session ID -> Session
 	clients map[wamp.ID]*session
@@ -134,21 +138,22 @@ func newRealm(config *RealmConfig, broker *Broker, dealer *Dealer, logger stdlog
 	}
 
 	r := &realm{
-		broker:      broker,
-		dealer:      dealer,
-		authorizer:  config.Authorizer,
-		clients:     map[wamp.ID]*session{},
-		testaments:  map[wamp.ID]testamentBucket{},
-		clientStop:  make(chan struct{}),
-		actionChan:  make(chan func()),
-		metaIDGen:   new(wamp.IDGen),
-		metaDone:    make(chan struct{}),
-		metaProcMap: make(map[wamp.ID]func(*wamp.Invocation) wamp.Message, 9),
-		log:         logger,
-		debug:       debug,
-		localAuth:   config.RequireLocalAuth,
-		localAuthz:  config.RequireLocalAuthz,
-		metaStrict:  config.MetaStrict,
+		broker:        broker,
+		dealer:        dealer,
+		authorizer:    config.Authorizer,
+		exitOnBadAuth: config.ExitOnBadAuth,
+		clients:       map[wamp.ID]*session{},
+		testaments:    map[wamp.ID]testamentBucket{},
+		clientStop:    make(chan struct{}),
+		actionChan:    make(chan func()),
+		metaIDGen:     new(wamp.IDGen),
+		metaDone:      make(chan struct{}),
+		metaProcMap:   make(map[wamp.ID]func(*wamp.Invocation) wamp.Message, 9),
+		log:           logger,
+		debug:         debug,
+		localAuth:     config.RequireLocalAuth,
+		localAuthz:    config.RequireLocalAuthz,
+		metaStrict:    config.MetaStrict,
 
 		enableMetaKill:   config.EnableMetaKill,
 		enableMetaModify: config.EnableMetaModify,
@@ -679,22 +684,40 @@ func (r *realm) authClient(sid wamp.ID, client wamp.Peer, details wamp.Dict) (*w
 		return nil, errors.New("no authentication supplied")
 	}
 
-	authr, method := r.getAuthenticator(authmethods)
-	if authr == nil {
+	attemptAuth := func(methods []string) (*wamp.Welcome, error) {
+		authr, method := r.getAuthenticator(authmethods)
+		if authr == nil {
+			return nil, errors.New("could not authenticate with any method")
+		}
+
+		// Return welcome message or error.
+		welcome, err := authr.Authenticate(sid, details, client)
+		if err != nil {
+			return nil, err
+		}
+		welcome.Details["authmethod"] = method
+		welcome.Details["roles"] = wamp.Dict{
+			"broker": r.broker.Role(),
+			"dealer": r.dealer.Role(),
+		}
+
+		return welcome, nil
+	}
+
+	if !r.exitOnBadAuth {
+		for _, method := range authmethods {
+			welcome, err := attemptAuth([]string{method})
+			if err == nil {
+				return welcome, nil
+			}
+		}
+
 		return nil, errors.New("could not authenticate with any method")
 	}
 
-	// Return welcome message or error.
-	welcome, err := authr.Authenticate(sid, details, client)
-	if err != nil {
-		return nil, err
-	}
-	welcome.Details["authmethod"] = method
-	welcome.Details["roles"] = wamp.Dict{
-		"broker": r.broker.Role(),
-		"dealer": r.dealer.Role(),
-	}
-	return welcome, nil
+	welcome, err := attemptAuth(authmethods)
+
+	return welcome, err
 }
 
 // getAuthenticator finds the first authenticator registered for the methods.

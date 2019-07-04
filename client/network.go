@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gammazero/nexus/transport"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/transport"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 func ConnectNet(routerURL string, cfg Config) (*Client, error) {

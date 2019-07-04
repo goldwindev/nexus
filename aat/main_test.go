@@ -14,12 +14,12 @@ import (
 	"time"
 
 	"github.com/fortytw2/leaktest"
-	"github.com/gammazero/nexus/client"
-	"github.com/gammazero/nexus/router"
-	"github.com/gammazero/nexus/router/auth"
-	"github.com/gammazero/nexus/stdlog"
-	"github.com/gammazero/nexus/transport/serialize"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/client"
+	"github.com/goldwindev/nexus/router"
+	"github.com/goldwindev/nexus/router/auth"
+	"github.com/goldwindev/nexus/stdlog"
+	"github.com/goldwindev/nexus/transport/serialize"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const (

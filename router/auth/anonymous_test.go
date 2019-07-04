@@ -3,7 +3,7 @@ package auth
 import (
 	"testing"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 func TestAnonAuth(t *testing.T) {

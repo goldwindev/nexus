@@ -4,7 +4,7 @@ import (
 	"crypto/sha256"
 	"testing"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 	"golang.org/x/crypto/pbkdf2"
 )
 

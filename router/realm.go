@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/gammazero/nexus/router/auth"
-	"github.com/gammazero/nexus/stdlog"
-	"github.com/gammazero/nexus/transport"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/router/auth"
+	"github.com/goldwindev/nexus/stdlog"
+	"github.com/goldwindev/nexus/transport"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 // RealmConfig configures a single realm in the router.  The router

@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gammazero/nexus/router"
+	"github.com/goldwindev/nexus/router"
 )
 
 func usage() {

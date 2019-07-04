@@ -10,9 +10,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/gammazero/nexus/stdlog"
-	"github.com/gammazero/nexus/transport/serialize"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/stdlog"
+	"github.com/goldwindev/nexus/transport/serialize"
+	"github.com/goldwindev/nexus/wamp"
 	"github.com/gorilla/websocket"
 )
 
@@ -32,7 +32,7 @@ type WebsocketConfig struct {
 	ProxyURL string
 
 	// Deprecated server config options.
-	// See: https://godoc.org/github.com/gammazero/nexus/router#WebsocketServer
+	// See: https://godoc.org/github.com/goldwindev/nexus/router#WebsocketServer
 	EnableTrackingCookie bool `json:"enable_tracking_cookie"`
 	EnableRequestCapture bool `json:"enable_request_capture"`
 }

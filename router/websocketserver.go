@@ -14,9 +14,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gammazero/nexus/transport"
-	"github.com/gammazero/nexus/transport/serialize"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/transport"
+	"github.com/goldwindev/nexus/transport/serialize"
+	"github.com/goldwindev/nexus/wamp"
 	"github.com/gorilla/websocket"
 )
 

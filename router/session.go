@@ -3,7 +3,7 @@ package router
 import (
 	"sync"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 // session is a wrapper around a wamp.Session to provide the router with a

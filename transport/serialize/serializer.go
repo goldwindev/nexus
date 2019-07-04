@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const (

@@ -2,7 +2,7 @@
 
 # WAMP v2 router library, client library and router service
 
-[![Build Status](https://travis-ci.org/gammazero/nexus.svg)](https://travis-ci.org/gammazero/nexus)
+[![Build Status](https://travis-ci.org/goldwindev/nexus.svg)](https://travis-ci.org/gammazero/nexus)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 
@@ -10,9 +10,9 @@
 
 ## Full Documentation
 
-See the [**nexus project Wiki**](https://github.com/gammazero/nexus/wiki) for full documentation, examples, and operational details.
+See the [**nexus project Wiki**](https://github.com/goldwindev/nexus/wiki) for full documentation, examples, and operational details.
 
-For the API: [![GoDoc](https://godoc.org/github.com/gammazero/nexus?status.svg)](https://godoc.org/github.com/gammazero/nexus)
+For the API: [![GoDoc](https://godoc.org/github.com/goldwindev/nexus?status.svg)](https://godoc.org/github.com/gammazero/nexus)
 
 ## What is WAMP and nexus
 
@@ -28,8 +28,8 @@ Nexus is a software package that provides a WAMP router library, client library,
 
 ### Nexus Features
 
-- **Concurrent Asynchronous I/O** Nexus supports large numbers of clients concurrently sending and receiving messages, and never blocks on I/O, even if a client becomes unresponsive.  See [Router Concurrency](https://github.com/gammazero/nexus/wiki/Router-Concurrency) for details.
-- **WAMP Advanced Profile Features**  This project implements most of the advanced profile features in WAMP v2.  See [current feature support](https://github.com/gammazero/nexus#advanced-profile-feature-support) provided by nexus.  Nexus also offers extended functionality for retrieving session information and for message filtering, giving clients more ability to decide where to send messages.
+- **Concurrent Asynchronous I/O** Nexus supports large numbers of clients concurrently sending and receiving messages, and never blocks on I/O, even if a client becomes unresponsive.  See [Router Concurrency](https://github.com/goldwindev/nexus/wiki/Router-Concurrency) for details.
+- **WAMP Advanced Profile Features**  This project implements most of the advanced profile features in WAMP v2.  See [current feature support](https://github.com/goldwindev/nexus#advanced-profile-feature-support) provided by nexus.  Nexus also offers extended functionality for retrieving session information and for message filtering, giving clients more ability to decide where to send messages.
 - **Flexibility** Multiple transports and serialization options are supported, and more are being developed to maximize interoperability.  Currently nexus provides websocket, rawsocket (tcp and unix), and local (in-process) transports.  [JSON](https://en.wikipedia.org/wiki/JSON), [MessagePack](http://msgpack.org/index.html), and [CBOR](https://tools.ietf.org/html/rfc7049) serialization is available over websockets and rawsockets.
 - **Security** TLS is available over websockets and rawsockets with client and server APIs that allow configuration of TLS.  The nexus router library also provides interfaces for integration of client authentication and authorization logic.
 
@@ -37,14 +37,14 @@ Nexus is a software package that provides a WAMP router library, client library,
 
 ### Installation
 ```
-go get github.com/gammazero/nexus/...
+go get github.com/goldwindev/nexus/...
 ```
 
 ### Build, Configure, and Run Router Service
 The nexus router library is generally used to build a WAMP router or embed one in your server.  A very basic stand-alone router, nexusd, is provided and can be built and run as follows:
 
 ```
-cd $GOPATH/src/github.com/gammazero/nexus/nexusd/
+cd $GOPATH/src/github.com/goldwindev/nexus/nexusd/
 go build
 vi etc/nexus.json
 ./nexusd
@@ -52,13 +52,13 @@ vi etc/nexus.json
 
 ### Examples
 
-Look at the examples to see how to create simple clients and servers.  Examples of using advanced profile features are available in the [full documentation](https://github.com/gammazero/nexus/wiki).
+Look at the examples to see how to create simple clients and servers.  Examples of using advanced profile features are available in the [full documentation](https://github.com/goldwindev/nexus/wiki).
 
-https://github.com/gammazero/nexus/tree/master/examples
+https://github.com/goldwindev/nexus/tree/master/examples
 
 ## Contributing
 
-Please read the [Contributing](https://github.com/gammazero/nexus/blob/master/CONTRIBUTING.md#contributing-to-nexus) guide if you are interested in becoming a contributor to this project.
+Please read the [Contributing](https://github.com/goldwindev/nexus/blob/master/CONTRIBUTING.md#contributing-to-nexus) guide if you are interested in becoming a contributor to this project.
 
 ## Status
 
@@ -66,7 +66,7 @@ A stable release of nexus is available with support for most advanced profile fe
 
 ### TODO
 
-These features listed here are being added.  If there are are specific items needed, or if any changes in current functionality are needed, then please open an [issue](https://github.com/gammazero/nexus/issues).
+These features listed here are being added.  If there are are specific items needed, or if any changes in current functionality are needed, then please open an [issue](https://github.com/goldwindev/nexus/issues).
 
 - more documentation and examples
 - event history
@@ -127,4 +127,4 @@ These features listed here are being added.  If there are are specific items nee
 
 ## Extended Functionality
 
-Nexus provides [extended functionality](https://github.com/gammazero/nexus/wiki/Extended-Functionality) around subscriber black/white listing and in the information available via the session meta API.  This enhances the ability of clients to make desisions about message recipients.
+Nexus provides [extended functionality](https://github.com/goldwindev/nexus/wiki/Extended-Functionality) around subscriber black/white listing and in the information available via the session meta API.  This enhances the ability of clients to make desisions about message recipients.

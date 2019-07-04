@@ -1,6 +1,6 @@
 package router
 
-import "github.com/gammazero/nexus/wamp"
+import "github.com/goldwindev/nexus/wamp"
 
 // Authorizer is the interface implemented by a type that provides the ability
 // to authorize sending messages.

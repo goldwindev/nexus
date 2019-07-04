@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 func _TestSendRecv(t *testing.T) {

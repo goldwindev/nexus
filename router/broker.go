@@ -3,8 +3,8 @@ package router
 import (
 	"fmt"
 
-	"github.com/gammazero/nexus/stdlog"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/stdlog"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const (

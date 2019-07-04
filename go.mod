@@ -1,4 +1,4 @@
-module github.com/gammazero/nexus
+module github.com/goldwindev/nexus
 
 go 1.12
 

@@ -23,9 +23,9 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/gammazero/nexus/client"
-	"github.com/gammazero/nexus/examples/newclient"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/client"
+	"github.com/goldwindev/nexus/examples/newclient"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const procedureName = "example.progress.text"

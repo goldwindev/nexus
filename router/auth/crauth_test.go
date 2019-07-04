@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gammazero/nexus/transport"
-	"github.com/gammazero/nexus/wamp"
-	"github.com/gammazero/nexus/wamp/crsign"
+	"github.com/goldwindev/nexus/transport"
+	"github.com/goldwindev/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp/crsign"
 )
 
 type testKeyStore struct {

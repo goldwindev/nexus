@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gammazero/nexus/client"
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/client"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const (

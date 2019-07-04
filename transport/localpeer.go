@@ -3,7 +3,7 @@ package transport
 import (
 	"context"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 const linkedPeersOutQueueSize = 16

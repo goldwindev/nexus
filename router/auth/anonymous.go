@@ -3,7 +3,7 @@ package auth
 import (
 	"strconv"
 
-	"github.com/gammazero/nexus/wamp"
+	"github.com/goldwindev/nexus/wamp"
 )
 
 // AnonymousAuth implements Authenticator interface.

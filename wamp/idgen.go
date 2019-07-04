@@ -10,10 +10,18 @@ const maxID int64 = 1 << 53
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
+	globalGen := &SyncIDGen{}
+}
+
+var globalGen *SyncIDGen
+
+// GlobalID generates an incremental WAMP ID using SyncIDGen.
+func GlobalID() ID {
+	return globalGen.Next()
 }
 
 // NewID generates a random WAMP ID.
-func GlobalID() ID {
+func NewID() ID {
 	return ID(rand.Int63n(maxID))
 }
 

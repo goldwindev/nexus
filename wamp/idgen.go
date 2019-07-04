@@ -10,7 +10,7 @@ const maxID int64 = 1 << 53
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	globalGen := &SyncIDGen{}
+	globalGen = &SyncIDGen{}
 }
 
 var globalGen *SyncIDGen

@@ -121,7 +121,7 @@ func TestJoinRealmWithCRAuthBad(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected error with bad username")
 	}
-	if !strings.HasSuffix(err.Error(), "invalid signature") {
+	if !strings.HasSuffix(err.Error(), "could not authenticate with any method") {
 		t.Fatal("wrong error message:", err)
 	}
 	if cli != nil {

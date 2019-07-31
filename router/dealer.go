@@ -29,7 +29,7 @@ const (
 	// CALL timeout which spedifies how long the callee may take to answer.
 	sendResultDeadline = time.Minute
 	// yieldRetryDelay is the initial delay before reprocessin a blocked yield
-	yieldRetryDelay = 200 * time.Millisecond
+	yieldRetryDelay = time.Millisecond
 )
 
 // Role information for this broker.

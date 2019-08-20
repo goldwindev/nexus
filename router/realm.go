@@ -685,7 +685,7 @@ func (r *realm) authClient(sid wamp.ID, client wamp.Peer, details wamp.Dict) (*w
 	}
 
 	attemptAuth := func(methods []string) (*wamp.Welcome, error) {
-		authr, method := r.getAuthenticator(authmethods)
+		authr, method := r.getAuthenticator(methods)
 		if authr == nil {
 			return nil, errors.New("could not authenticate with any method")
 		}

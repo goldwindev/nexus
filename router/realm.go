@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/goldwindev/nexus/router/auth"
 	"github.com/goldwindev/nexus/stdlog"
@@ -144,21 +145,21 @@ func newRealm(config *RealmConfig, broker *Broker, dealer *Dealer, logger stdlog
 	}
 
 	r := &realm{
-		broker:      broker,
-		dealer:      dealer,
-		authorizer:  config.Authorizer,
+		broker:        broker,
+		dealer:        dealer,
+		authorizer:    config.Authorizer,
 		exitOnBadAuth: config.ExitOnBadAuth,
-		clients:     map[wamp.ID]*wamp.Session{},
-		testaments:  map[wamp.ID]testamentBucket{},
-		actionChan:  make(chan func()),
-		metaIDGen:   new(wamp.IDGen),
-		metaDone:    make(chan struct{}),
-		metaProcMap: make(map[wamp.ID]func(*wamp.Invocation) wamp.Message, 9),
-		log:         logger,
-		debug:       debug,
-		localAuth:   config.RequireLocalAuth,
-		localAuthz:  config.RequireLocalAuthz,
-		metaStrict:  config.MetaStrict,
+		clients:       map[wamp.ID]*wamp.Session{},
+		testaments:    map[wamp.ID]testamentBucket{},
+		actionChan:    make(chan func()),
+		metaIDGen:     new(wamp.IDGen),
+		metaDone:      make(chan struct{}),
+		metaProcMap:   make(map[wamp.ID]func(*wamp.Invocation) wamp.Message, 9),
+		log:           logger,
+		debug:         debug,
+		localAuth:     config.RequireLocalAuth,
+		localAuthz:    config.RequireLocalAuthz,
+		metaStrict:    config.MetaStrict,
 
 		enableMetaKill:   config.EnableMetaKill,
 		enableMetaModify: config.EnableMetaModify,
@@ -316,7 +317,22 @@ func (r *realm) run() {
 	go r.metaProcedureHandler()
 
 	for action := range r.actionChan {
-		action()
+		r.log.Println("Running action...")
+
+		c := make(chan bool)
+		go func() {
+			action()
+			c <- true
+		}()
+
+		select {
+		case <-c:
+			r.log.Println("Action finished!")
+			continue
+		case <-time.After(1 * time.Second):
+			r.log.Println("ACTION TIMEOUT REACHED")
+			continue
+		}
 	}
 }
 

@@ -312,8 +312,9 @@ func (s *WebsocketServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err == nil {
 			// Create new auth cookie with 20 byte random value.
 			nextCookie = &http.Cookie{
-				Name:  cookieName,
-				Value: base64.URLEncoding.EncodeToString(b),
+				Name:   cookieName,
+				Value:  base64.URLEncoding.EncodeToString(b),
+				Domain: r.Host,
 			}
 			http.SetCookie(w, nextCookie)
 			authDict["nextcookie"] = nextCookie

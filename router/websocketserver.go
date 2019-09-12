@@ -314,7 +314,7 @@ func (s *WebsocketServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			nextCookie = &http.Cookie{
 				Name:   cookieName,
 				Value:  base64.URLEncoding.EncodeToString(b),
-				Domain: r.Host,
+				Domain: r.URL.Hostname(),
 			}
 			http.SetCookie(w, nextCookie)
 			authDict["nextcookie"] = nextCookie

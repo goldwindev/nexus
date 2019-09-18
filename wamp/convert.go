@@ -1,6 +1,10 @@
 package wamp
 
-import "reflect"
+import (
+	"encoding/json"
+	"reflect"
+	"strconv"
+)
 
 // AsString is an extended type assertion for string.
 func AsString(v interface{}) (string, bool) {
@@ -57,6 +61,20 @@ func AsInt64(v interface{}) (int64, bool) {
 		return int64(v), true
 	case float32:
 		return int64(v), true
+	case string:
+		val, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return 0, false
+		}
+
+		return val, true
+	case json.Number:
+		val, err := v.Int64()
+		if err != nil {
+			return 0, false
+		}
+
+		return val, true
 	}
 	return 0, false
 }
@@ -82,6 +100,20 @@ func AsFloat64(v interface{}) (float64, bool) {
 		return float64(v), true
 	case uint32:
 		return float64(v), true
+	case string:
+		val, err := strconv.ParseFloat(v, 64)
+		if err != nil {
+			return 0, false
+		}
+
+		return val, true
+	case json.Number:
+		val, err := v.Float64()
+		if err != nil {
+			return 0, false
+		}
+
+		return val, true
 	}
 	return 0.0, false
 }

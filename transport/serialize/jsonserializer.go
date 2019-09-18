@@ -1,6 +1,7 @@
 package serialize
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -28,11 +29,15 @@ func (s *JSONSerializer) Serialize(msg wamp.Message) ([]byte, error) {
 
 // Deserialize decodes a json payload into a Message.
 func (s *JSONSerializer) Deserialize(data []byte) (wamp.Message, error) {
+	d := json.NewDecoder(bytes.NewReader(data))
+	d.UseNumber() // Preserve number types
+
 	var v []interface{}
-	err := json.Unmarshal(data, &v)
+	err := d.Decode(&v)
 	if err != nil {
 		return nil, err
 	}
+
 	if len(v) == 0 {
 		return nil, errors.New("invalid message")
 	}

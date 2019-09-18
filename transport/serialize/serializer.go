@@ -68,8 +68,24 @@ func listToMsg(msgType wamp.MessageType, vlist []interface{}) (wamp.Message, err
 		}
 		// See if the list item and message field are same kind, error if not.
 		if arg.Type().Kind() != f.Type().Kind() {
-			return nil, fmt.Errorf("field %d not recognized, has %s, want %s",
+			errorMessage := fmt.Errorf("field %d not recognized, has %s, want %s",
 				i+1, arg.Type(), f.Type())
+			if arg.Type().String() != "json.Number" {
+				return nil, errorMessage
+			}
+
+			switch f.Type().String() {
+			case "wamp.ID":
+				v, ok := wamp.AsInt64(vlist[i+1])
+				if !ok {
+					return nil, errorMessage
+				}
+
+				f.SetUint(uint64(v))
+				continue
+			}
+
+			return nil, errorMessage
 		}
 		// If field and list item type is map, then assign item to msg field.
 		if f.Type().Kind() == reflect.Map {

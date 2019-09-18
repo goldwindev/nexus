@@ -196,3 +196,49 @@ func OptionFlag(opts Dict, optionName string) bool {
 	opt, _ := AsBool(opts[optionName])
 	return opt
 }
+
+// JSONNumberToType represents the types to convert json.Number to: [int64, float64, intOrFloat64]
+type JSONNumberToType string
+
+func ConvertTypeFromInterface(data interface{}, fromType string, toType JSONNumberToType) interface{} {
+	d := reflect.ValueOf(data)
+	if d.Kind() == reflect.Slice {
+		returnSlice := make([]interface{}, d.Len())
+		for i := 0; i < d.Len(); i++ {
+			returnSlice[i] = ConvertTypeFromInterface(d.Index(i).Interface(), fromType, toType)
+		}
+		return returnSlice
+	} else if d.Kind() == reflect.Map {
+		tmpData := make(map[string]interface{})
+		for _, k := range d.MapKeys() {
+			tmpData[k.String()] = ConvertTypeFromInterface(d.MapIndex(k).Interface(), fromType, toType)
+		}
+		return tmpData
+	} else if d.Type().String() == fromType {
+		switch toType {
+		case "int64":
+			v, ok := AsInt64(data)
+			if !ok {
+				return data
+			}
+			return v
+		case "float64":
+			v, ok := AsFloat64(data)
+			if !ok {
+				return data
+			}
+			return v
+		case "intOrFloat64":
+			if v, ok := AsInt64(data); ok {
+				return v
+			}
+
+			if v, ok := AsFloat64(data); ok {
+				return v
+			}
+			return data
+		}
+	}
+
+	return data
+}

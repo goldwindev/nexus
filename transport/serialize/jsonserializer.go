@@ -38,6 +38,12 @@ func (s *JSONSerializer) Deserialize(data []byte) (wamp.Message, error) {
 		return nil, err
 	}
 
+	convertedValue := wamp.ConvertTypeFromInterface(v, "json.Number", "intOrFloat64")
+	v, ok := convertedValue.([]interface{})
+	if !ok {
+		return nil, errors.New("couldn't convert to []interface{}")
+	}
+
 	if len(v) == 0 {
 		return nil, errors.New("invalid message")
 	}

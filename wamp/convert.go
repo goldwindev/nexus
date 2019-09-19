@@ -202,6 +202,7 @@ type JSONNumberToType string
 
 func ConvertTypeFromInterface(data interface{}, fromType string, toType JSONNumberToType) interface{} {
 	d := reflect.ValueOf(data)
+	dt := reflect.TypeOf(data)
 	if d.Kind() == reflect.Slice {
 		returnSlice := make([]interface{}, d.Len())
 		for i := 0; i < d.Len(); i++ {
@@ -214,7 +215,7 @@ func ConvertTypeFromInterface(data interface{}, fromType string, toType JSONNumb
 			tmpData[k.String()] = ConvertTypeFromInterface(d.MapIndex(k).Interface(), fromType, toType)
 		}
 		return tmpData
-	} else if d.Type().String() == fromType {
+	} else if dt != nil && dt.String() == fromType {
 		switch toType {
 		case "int64":
 			v, ok := AsInt64(data)

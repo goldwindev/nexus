@@ -18,7 +18,7 @@ import (
 	"github.com/goldwindev/nexus/wamp"
 )
 
-const helloTimeout = 5 * time.Second
+const helloTimeout = 10 * time.Second
 
 // Deprecated: replaced by Config
 //
@@ -150,6 +150,7 @@ func (r *router) AttachClient(client wamp.Peer, transportDetails wamp.Dict) erro
 	// Receive HELLO message from the client.
 	msg, err := wamp.RecvTimeout(client, helloTimeout)
 	if err != nil {
+		sendAbort(wamp.ErrNetworkFailure, err)
 		return errors.New("did not receive HELLO: " + err.Error())
 	}
 	if r.debug {

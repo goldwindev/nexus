@@ -129,6 +129,34 @@ func TestHandshake(t *testing.T) {
 	}
 }
 
+func TestHandshakeTimeout(t *testing.T) {
+	defer leaktest.Check(t)()
+	r, err := newTestRouter()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer r.Close()
+
+	client, server := transport.LinkedPeers()
+	err = r.Attach(server)
+	if err == nil {
+		t.Fatal("did not receive timeout error")
+		// fmt.Println("ASDF")
+		// t.Fatal(err)
+	}
+
+	msg, err := wamp.RecvTimeout(client, time.Second)
+	if err != nil {
+		t.Errorf("error waiting for welcome: %s", err)
+	}
+
+	_, ok := msg.(*wamp.Abort)
+	if !ok {
+		t.Errorf("expected %v, got %v", wamp.ABORT,
+			msg.MessageType())
+	}
+}
+
 func TestHandshakeBadRealm(t *testing.T) {
 	defer leaktest.Check(t)()
 	r, err := newTestRouter()

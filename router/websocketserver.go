@@ -315,6 +315,7 @@ func (s *WebsocketServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				Name:   cookieName,
 				Value:  base64.URLEncoding.EncodeToString(b),
 				Domain: r.URL.Hostname(),
+				MaxAge: 60 * 60 * 24 * 7, // 1 week, todo: make this configurable
 			}
 			http.SetCookie(w, nextCookie)
 			authDict["nextcookie"] = nextCookie

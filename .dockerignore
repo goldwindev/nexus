@@ -1,0 +1,11 @@
+# Git
+.git
+
+# Archives
+*.tar.gz
+*.tgz
+*.tar
+*.zip
+
+# Dotenv
+.env.example
